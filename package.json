@@ -1,0 +1,32 @@
+{
+  "name": "loginapp",
+  "version": "1.0.0",
+  "description": "seplice applicazione di login con passport e nodejs",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Braccone",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.3.0",
+    "bluebird": "^3.4.0",
+    "body-parser": "^1.15.1",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.3",
+    "ejs": "^2.4.2",
+    "express": "^4.13.4",
+    "express-ejs-layouts": "^2.2.0",
+    "express-messages": "^1.0.1",
+    "express-session": "^1.13.0",
+    "express-validator": "^2.20.5",
+    "jwt-simple": "^0.5.0",
+    "moment": "^2.13.0",
+    "passport": "^0.3.2",
+    "passport-http": "^0.3.0",
+    "passport-local": "^1.0.0",
+    "passport-token": "^0.1.3",
+    "rethinkdb": "^2.3.2",
+    "thinky": "^2.3.4"
+  }
+}
