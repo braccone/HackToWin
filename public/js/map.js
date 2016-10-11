@@ -82,7 +82,8 @@ TILEDmap = function(){
 
 	//------------------------------
 	this.load = function(){
-
+		// Inserire il controllo con socket e l'invio del file json della mappa
+		// a seconda dell'utente
 		$.get( "/map", function( data ) {
 			$(document).load(gMap.parseMapJSON(data.mappa));
 		});
@@ -297,7 +298,7 @@ TILEDmap = function(){
 				//Test is this tile is within our world bounds
 				var worldX = Math.floor(tileIDX % this.numXTiles) * this.tileSize.x;
 				var worldY = Math.floor(tileIDX / this.numXTiles) * this.tileSize.y;
-				// player.Draw(ctx);
+
 				var visible = this.intersectRect(vRect,{
 					top: worldY,
 					left: worldX,
@@ -313,7 +314,7 @@ TILEDmap = function(){
 
 			}
 		}
-		//player.Draw(ctx);
+
 	}
 };
 var gMap = new TILEDmap();
