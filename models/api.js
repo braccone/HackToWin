@@ -83,30 +83,45 @@ UserMissioni.hasOne(Missioni,"missione","missionId","id");
 // Query
 // braccone: 1c891706-037d-402f-b564-50d1d03c356e
 // 1mission: bb375656-23ca-43e5-9db0-842879154b6b
+
 //numero missioni iniziate prova con id di braccone
-User.get("1c891706-037d-402f-b564-50d1d03c356e").getJoin({userDate: true}).run().then(function(user){
-	// console.log("numero di missioni iniziate braccone ", user.userDate.length);
-});
+exports.missioniIniziate = function(id){
+	User.get(id).getJoin({userDate: true}).run().then(function(missioni){
+		return missioni.length;
+	})
+	.error(function(err) {
+		return err;
+	});
+}
 
 //missioni completate
-r.table("utenti_missioni").filter({userId: "1c891706-037d-402f-b564-50d1d03c356e"})
-.hasFields("dataFine").run().then(function(missioni){
-	// console.log("numero di missioni finite", missioni.length);
-});
+exports.missioniFinite = function(id){
+	UserMissioni.filter({userId: id})
+	.hasFields("dataFine").run().then(function(missioni){
+		return missioni.length; 
+	})
+	.error(function(err) {
+		return err;
+	});
+}
 
 //query del punteggio totale
-UserMissioni.hasFields("dataFine").filter({userId:"1c891706-037d-402f-b564-50d1d03c356e"})
-.getJoin({missione: true}).run()
-.then(function(usermissioni){
-	// console.log(usermissioni)
-	var somma =0;
-	usermissioni.forEach( function(element, index) {
-		somma += element.missione.punteggio;
-		// console.log(element.prova.punteggio);
-	});
-	// console.log('somma:',somma);
-});
-
+exports.punteggioTot = function(id){
+	UserMissioni.hasFields("dataFine").filter({userId:id})
+	.getJoin({missione: true}).run()
+	.then(function(usermissioni){
+		// console.log(usermissioni)
+		var somma =0;
+		usermissioni.forEach( function(element, index) {
+			somma += element.missione.punteggio;
+			// console.log(element.prova.punteggio);
+		});
+		return somma;
+	})
+	.error(function(err) {
+		return err
+	});;
+}
 // Per calcolare il tempo di completamento di una missione
 function giorni(m){
 	return Math.floor(m/(24*60*60*1000));
@@ -121,65 +136,41 @@ function secondi(m){
 	return Math.floor(((m-giorni(m)*24*60*60*1000)-ore(m)*60*60*1000-minuti(m)*60*1000)/1000);
 }
 // query per il tempo di completamento delle missione
-UserMissioni.filter({userId:"1c891706-037d-402f-b564-50d1d03c356e"}).hasFields("dataFine").getJoin({missione:true}).run()
-.then(function(missioni){
-	// console.log(missioni);
-	var tempo = new Array();
-	missioni.forEach( function(element, index) {
-		var ms =Math.abs(element.dataFine-element.dataInizio);
-		// console.log(element.missione.titolo);
-		// console.log("days:",giorni(ms));
-		// console.log("hours:",ore(ms));
-		// console.log("minutes:",minuti(ms));
-		// console.log("seconds:",secondi(ms));
-		tempo.push({
-			nomeMissione:element.missione.titolo,
-			giorni:giorni(ms),
-			ore: ore(ms),
-			minuti: minuti(ms),
-			secondi: secondi(ms)
+exports.statistiche = function(id){
+	UserMissioni.filter({userId:id}).hasFields("dataFine").getJoin({missione:true}).run()
+	.then(function(missioni){
+		var tempo = new Array();
+		missioni.forEach( function(element, index) {
+			var ms =Math.abs(element.dataFine-element.dataInizio);
+			tempo.push({
+				nomeMissione:element.missione.titolo,
+				punteggio: element.missione.punteggio,
+				dataInizio: element.dataInizio,
+				dataFine: element.dataFine,
+				giorni:giorni(ms),
+				ore: ore(ms),
+				minuti: minuti(ms),
+				secondi: secondi(ms)
+			});
 		});
-	});
-	// console.log(tempo);
-
-});
-
-Avatar.get("bb375656-23ca-43e5-9db0-842879154b6b").getJoin({useravatar: true})
-	.run()
+		return tempo;
+	})
 	.error(function(err) {
-		console.log(err)
-	});
-
-
-exports.findUser = function(){
-	return r.table(User.getTableName()).filter('id')
-		.run().then(function(result) {
-					if (result) {
-						return result.toArray(); }
-					return null;
-	}).error(function(err){
-		return {"err":err};
+		return err;
 	});
 }
-exports.findAllUser = function(){
-	return r.table(User.getTableName()).run().then(function(result){
-		if(result) return result.toArray();
-		return null;
-	})
-	.error(function(err){
-		return {"err":err};
-	})
+exports.getAvatar = function(id){
+	Avatar.filter({userId:id}).nth(0).default("")
+		.run()
+		.then(function(avatar){
+			return avatar;
+		})
+		.error(function(err) {
+			return err;
+		});
 }
 
-exports.findBy = function(table,fieldName, value){
-	r.table(table.getTableName()).filter(r.row(fieldName).eq(value)).run().then(function(result){
-		if(result) return result.toArray();
-		return null;
-	})
-	.error(function(err){
-		return {"err":err};
-	})
-}
+
 // Funzione che permette all'utente di registrarsi con i dovuti controlli
 exports.addUser = function(req,res){
 
@@ -249,8 +240,10 @@ exports.addUser = function(req,res){
 // PASSPORT STRATEGIES
 passport.use(new LocalStrategy(
 	function(username, password, done) {
-
-		r.table(User.getTableName()).filter(r.row('username').eq(username)).nth(0).run().then(function (user) {
+		try {
+			// statements
+		
+		r.table(User.getTableName()).filter(r.row('username').eq(username)).nth(0).default("").run().then(function (user) {
 			// fondamentale altrimenti non funziona un cazzo
 			// user.toArray;
 			if (user.length == 0) {
@@ -267,8 +260,12 @@ passport.use(new LocalStrategy(
 			}
 		})
 		.error(function(err){
-			if (err) { return done(err); }
+			return done(err);
 		});
+		} catch(e) {
+			// statements
+			console.log("errore");
+		}
 	}
 ));
 
@@ -277,7 +274,7 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function (username, done) {
-	r.table(User.getTableName()).filter(r.row('username').eq(username)).nth(0).run().then(function(user){
+	r.table(User.getTableName()).filter(r.row('username').eq(username)).nth(0).default("").run().then(function(user){
 		done(null,user);
 	})
 });

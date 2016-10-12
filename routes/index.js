@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var api = require('../models/api');
 var auth = require('../models/auth');
 var path = require('path');
 var fs = require('fs');
@@ -20,6 +21,7 @@ router.get('/home',verificaAutenticazione,function (req, res, err) {
 });
 
 router.get('/profilo',verificaAutenticazione,function(req,res,err){
+
 	res.render('../profilo');
 });
 router.get("/map",verificaAutenticazione,function(req, res){
