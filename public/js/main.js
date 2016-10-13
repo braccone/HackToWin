@@ -1,3 +1,5 @@
+var socket = io();
+socket.emit('auth',utente);
 var canvas = document.getElementById("gioco");
 var ctx	= canvas.getContext('2d');
 //canvas.width		= document.body.clientWidth;
@@ -7,7 +9,7 @@ canvas.height = 500;
 canvas.style = " border: 1px solid #000";
 input.offset = new Vector2(GetLeft(canvas), GetTop(canvas));
 
-var player = new Player();
+var player = new Player(350,250,"/img/player.png",utente.comandi);
 var color = new Color(0, 0, 0, 1);
 //var solid = new Rectangle(400,400,30,30,color);
 

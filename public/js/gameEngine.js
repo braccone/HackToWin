@@ -1,5 +1,4 @@
-function GetLeft(elm)
-{
+function GetLeft(elm) {
 	var left = elm.offsetLeft;
 	while (elm = elm.offsetParent)
 		left += elm.offsetLeft;
@@ -9,8 +8,7 @@ function GetLeft(elm)
 	return left;
 }
 
-function GetTop(elm)
-{
+function GetTop(elm) {
 	var top = elm.offsetTop;
 	while (elm = elm.offsetParent)
 		top += elm.offsetTop;
@@ -20,12 +18,9 @@ function GetTop(elm)
 	return top;
 }
 
-Array.prototype.Remove = function(arg, all)
-{
-	for (var i = 0; i < this.length; i++)
-	{
-		if (this[i] == arg)
-		{
+Array.prototype.Remove= function(arg, all) {
+	for (var i = 0; i < this.length; i++) {
+		if (this[i] == arg) {
 			this.splice(i, 1);
 
 			if (all == null || !all)
@@ -36,18 +31,15 @@ Array.prototype.Remove = function(arg, all)
 	}
 }
 
-Array.prototype.RemoveAt = function(position)
-{
+Array.prototype.RemoveAt= function(position) {
 	this.splice(position, 1);
 }
 
-Array.prototype.Clear = function()
-{
+Array.prototype.Clear= function() {
 	this.length = 0;
 }
 
-Array.prototype.InsertAt = function(arg, position)
-{
+Array.prototype.InsertAt= function(arg, position) {
 	var arr1 = this.slice(0, position);
 	var arr2 = this.slice(position);
 
@@ -62,21 +54,18 @@ Array.prototype.InsertAt = function(arg, position)
 		this.push(arr2[j]);
 }
 
-Array.prototype.Contains = function(arg)
-{
+Array.prototype.Contains= function(arg) {
 	for (var i = 0; i < this.length; i++)
 		if (this[i] == arg)
 			return true;
 
-	return false;
+	return ffalse;
 }
 
-Array.prototype.Occurs = function(arg)
-{
+Array.prototype.Occurs= function(arg) {
 	var counter = 0;
 
-	for (var i = 0; i < this.length; i++)
-	{
+	for (var i = 0; i < this.length; i++) {
 		if (this[i] == arg)
 			counter++;
 	}
@@ -84,18 +73,14 @@ Array.prototype.Occurs = function(arg)
 	return counter;
 }
 
-Vector2 = function(x, y)
-{
+Vector2= function(x, y) {
 	this.x = 0;
 	this.y = 0;
 
-	if (x != null && y == null)
-	{
+	if (x != null && y == null) {
 		this.x = x;
 		this.y = x;
-	}
-	else
-	{
+	} else {
 		if (x != null)
 			this.x = x;
 		if (y != null)
@@ -105,24 +90,17 @@ Vector2 = function(x, y)
 	this.previousX = 0;
 	this.previousY = 0;
 
-	this.Set = function(x, y)
-	{
-		if (x == null && y == null)
-		{
+	this.Set= function(x, y) {
+		if (x == null && y == null) {
 			console.log("No 'x' or 'y' has been passed to Vector2's Set function");
-		}
-		else
-		{
+		} else {
 			this.previousX = this.x;
 			this.previousY = this.y;
 
-			if (x != null && y == null)
-			{
+			if (x != null && y == null) {
 				this.x = x;
 				this.y = y;
-			}
-			else
-			{
+			} else {
 				if (x != null)
 					this.x = x;
 
@@ -132,14 +110,12 @@ Vector2 = function(x, y)
 		}
 	};
 
-	this.Move = function(vec2)
-	{
+	this.Move= function(vec2) {
 		this.x += vec2.x;
 		this.y += vec2.y;
 	};
 
-	this.Normalize = function()
-	{
+	this.Normalize= function() {
 		var tmp = new Vector2(this.x, this.y);
 
 		var mag = Math.sqrt((tmp.x * tmp.x) + (tmp.y * tmp.y));
@@ -149,24 +125,21 @@ Vector2 = function(x, y)
 		return tmp;
 	};
 
-	this.Distance = function(vec2)
-	{
+	this.Distance= function(vec2) {
 		if (vec2 != null)
 			return Math.sqrt(((vec2.x - this.x) * (vec2.x - this.x)) + ((this.y - vec2.y) * (this.y - vec2.y)));
 		else
 			return Math.sqrt(((this.previousX - this.x) * (this.previousX - this.x)) + ((this.previousY - this.y) * (this.previousY - this.y)));
 	};
 
-	this.HasChanged = function()
-	{
+	this.HasChanged= function() {
 		if (this.x != this.previousX || this.y != this.previousY)
 			return true;
 
-		return false;
+		return ffalse;
 	};
 
-	this.Difference = function(vec2, invert)
-	{
+	this.Difference= function(vec2, invert) {
 		var inv = 1;
 
 		if (invert)
@@ -179,8 +152,7 @@ Vector2 = function(x, y)
 	};
 };
 
-Color = function(r, g, b, a)
-{
+Color= function(r, g, b, a) {
 	this.r = 0;
 	this.g = 0;
 	this.b = 0;
@@ -195,8 +167,7 @@ Color = function(r, g, b, a)
 	if (a != null)
 		this.a = a;
 
-	this.ToStandard = function(noAlpha)
-	{
+	this.ToStandard= function(noAlpha) {
 		if (noAlpha == null || !noAlpha)
 			return "rgba(" + this.r + "," + this.g + "," + this.b + "," + this.a + ")";
 		else
@@ -204,10 +175,8 @@ Color = function(r, g, b, a)
 	};
 };
 
-Rectangle = function(x, y, w, h, image)
-{
-	if (x == null || y == null || w == null || h == null)
-	{
+Rectangle= function(x, y, w, h, image) {
+	if (x == null || y == null || w == null || h == null) {
 		alert("You must pass in all the veriables for a rectange: (x, y, width, height)");
 
 		var errorMsg = "The following are not provided:";
@@ -224,57 +193,49 @@ Rectangle = function(x, y, w, h, image)
 		throw new Error(errorMsg);
 	}
 
-	this.x		= x;
-	this.y		= y;
-	this.width	= w;
-	this.height	= h;
+	this.x = x;
+	this.y = y;
+	this.width = w;
+	this.height = h;
 	this.image = image;
 
 	this.color = new Color();
 
-	this.Intersects = function(shape)
-	{
+	this.Intersects= function(shape) {
 		var offset = 0;
 		if (shape.radius != null)
 			offset = shape.radius;
 
 		if (this.Contains(shape.x - offset, shape.y - offset) || this.Contains(shape.x + shape.width - offset, shape.y - offset) ||
-			this.Contains(shape.x - offset, shape.y + shape.height - offset) || this.Contains(shape.x + shape.width - offset, shape.y + shape.height - offset))
-		{
+			this.Contains(shape.x - offset, shape.y + shape.height - offset) || this.Contains(shape.x + shape.width - offset, shape.y + shape.height - offset)) {
 			return true;
-		}
-		else if (shape.Contains(this.x - offset, this.y - offset) || shape.Contains(this.x + this.width - offset, this.y - offset) ||
-			shape.Contains(this.x - offset, this.y + this.height - offset) || shape.Contains(this.x + this.width - offset, this.y + this.height - offset))
-		{
+		} else if (shape.Contains(this.x - offset, this.y - offset) || shape.Contains(this.x + this.width - offset, this.y - offset) ||
+			shape.Contains(this.x - offset, this.y + this.height - offset) || shape.Contains(this.x + this.width - offset, this.y + this.height - offset)) {
 			return true;
 		}
 
-		return false;
+		return ffalse;
 	};
 
-	this.Contains = function(x, y)
-	{
+	this.Contains= function(x, y) {
 		if (x >= this.x && x <= this.x + this.width &&
 			y >= this.y && y <= this.y + this.height)
 			return true;
 		else
-			return false;
+			return ffalse;
 	};
 
-	this.Draw = function(ctx)
-	{
-		if(this.image != null){
-			ctx.drawImage(this.image.image,this.image.px,this.image.py,this.image.image.width,this.image.image.height,this.x,this.y,this.image.image.width,this.image.image.height);
-		}
-		else{
+	this.Draw= function(ctx) {
+		if (this.image != null) {
+			ctx.drawImage(this.image.image, this.image.px, this.image.py, this.image.image.width, this.image.image.height, this.x, this.y, this.image.image.width, this.image.image.height);
+		} else {
 			ctx.fillStyle = this.color.ToStandard();
 			ctx.fillRect(this.x, this.y, this.width, this.height);
 		}
 	}
 };
 
-Animation = function(width, height, row, column, limit, imgSrc, fps, columns, rows)
-{
+Animation= function(width, height, row, column, limit, imgSrc, fps, columns, rows) {
 	if (fps == null || fps >= 33)
 		this.fps = 1;
 	else
@@ -299,13 +260,11 @@ Animation = function(width, height, row, column, limit, imgSrc, fps, columns, ro
 	this.position = new Vector2(0);
 	this.spritePos = new Vector2(0);
 
-	this.SetLimit = function(limit)
-	{
+	this.SetLimit= function(limit) {
 		this.limit = limit - 1;
 	};
 
-	this.SetRow = function(num)
-	{
+	this.SetRow= function(num) {
 		this.row = num;
 		this.rowStart = num;
 
@@ -313,8 +272,7 @@ Animation = function(width, height, row, column, limit, imgSrc, fps, columns, ro
 		this.spritePos.y = this.height * this.row;
 	};
 
-	this.SetColumn = function(num)
-	{
+	this.SetColumn= function(num) {
 		this.column = num;
 		this.columnStart = num;
 
@@ -322,8 +280,7 @@ Animation = function(width, height, row, column, limit, imgSrc, fps, columns, ro
 		this.spritePos.y = this.height * this.row;
 	};
 
-	this.Update = function()
-	{
+	this.Update= function() {
 		this.spritePos.x = this.width * this.column;
 		this.spritePos.y = this.height * this.row;
 
@@ -333,52 +290,45 @@ Animation = function(width, height, row, column, limit, imgSrc, fps, columns, ro
 			this.rows = this.image.height / this.height;
 	};
 
-	this.Draw = function(ctx)
-	{
+	this.Draw= function(ctx) {
 		//porva
 		var canPos = {
-			x: ctx.canvas.width/2,
-			y: ctx.canvas.height/2,
+			x: ctx.canvas.width / 2,
+			y: ctx.canvas.height / 2,
 		};
 
-		if (this.fpsCounter == 0)
-		{
-			if (this.limitCount < this.limit)
-			{
+		if (this.fpsCounter == 0) {
+			if (this.limitCount < this.limit) {
 				this.limitCount++;
 				this.column++;
 
-				if (this.column >= this.columns)
-				{
+				if (this.column >= this.columns) {
 					this.row++;
 					this.column = 0;
 
-					if (this.row >= this.rows)
-					{
+					if (this.row >= this.rows) {
 						this.row = this.rowStart;
 						this.column = this.columnStart;
 						this.limitCount = 0;
 					}
 				}
-			}
-			else
-			{
+			} else {
 				this.column = this.columnStart
 				this.row = this.rowStart;
 				this.limitCount = 0;
 			}
 		}
 		//prove----------------------------------------
-		if(this.position.x<canvas.width/2){
+		if (this.position.x < canvas.width / 2) {
 			canPos.x = this.position.x;
 		}
-		if(this.position.y<canvas.height/2){
+		if (this.position.y < canvas.height / 2) {
 			canPos.y = this.position.y;
 		}
-		if(this.position.x  > gMap.pixelSize.x - ctx.canvas.width/2){
+		if (this.position.x > gMap.pixelSize.x - ctx.canvas.width / 2) {
 			canPos.x = ctx.canvas.width - gMap.pixelSize.x + this.position.x;
 		}
-		if(this.position.y  > gMap.pixelSize.y - ctx.canvas.height/2){
+		if (this.position.y > gMap.pixelSize.y - ctx.canvas.height / 2) {
 			canPos.y = ctx.canvas.height - gMap.pixelSize.y + this.position.y;
 		}
 		ctx.drawImage(this.image, this.spritePos.x, this.spritePos.y, this.width, this.height, canPos.x, canPos.y, this.width, this.height);
@@ -390,284 +340,314 @@ Animation = function(width, height, row, column, limit, imgSrc, fps, columns, ro
 	};
 };
 
-Input = function()
-{
-	this.a = false;
-	this.b = false;
-	this.c = false;
-	this.d = false;
-	this.e = false;
-	this.f = false;
-	this.g = false;
-	this.h = false;
-	this.i = false;
-	this.j = false;
-	this.k = false;
-	this.l = false;
-	this.m = false;
-	this.n = false;
-	this.o = false;
-	this.p = false;
-	this.q = false;
-	this.r = false;
-	this.s = false;
-	this.t = false;
-	this.u = false;
-	this.v = false;
-	this.w = false;
-	this.x = false;
-	this.y = false;
-	this.z = false;
-	this.left = false;
-	this.right = false;
-	this.up = false;
-	this.down = false;
-	this.enter = false;
-	this.space = false;
-	this.mouseIsDown = false;
-	this.mousePosition = new Vector2(0);
-	this.offset = new Vector2(0);
-	this.clamp = new Vector2(0);
+Input= function() {
+	this.tasto = {
+		"a": false,
+		"b": false,
+		"c": false,
+		"d": false,
+		"e": false,
+		"f": false,
+		"g": false,
+		"h": false,
+		"i": false,
+		"j": false,
+		"k": false,
+		"l": false,
+		"m": false,
+		"n": false,
+		"o": false,
+		"p": false,
+		"q": false,
+		"r": false,
+		"s": false,
+		"t": false,
+		"u": false,
+		"v": false,
+		"w": false,
+		"x": false,
+		"y": false,
+		"z": false,
+		"left": false,
+		"right": false,
+		"up": false,
+		"down": false,
+		"enter": false,
+		"space": false,
+		"mouseIsDown": false,
+		"mousePosition" : new Vector2(0),
+		"offset" : new Vector2(0),
+		"clamp" : new Vector2(0),
+	}
+	// this.a = false;
+	// this.b = false;
+	// this.c = false;
+	// this.d = false;
+	// this.e = false;
+	// this.f = false;
+	// this.g = false;
+	// this.h = false;
+	// this.i = false;
+	// this.j = false;
+	// this.k = false;
+	// this.l = false;
+	// this.m = false;
+	// this.n = false;
+	// this.o = false;
+	// this.p = false;
+	// this.q = false;
+	// this.r = false;
+	// this.s = false;
+	// this.t = false;
+	// this.u = false;
+	// this.v = false;
+	// this.w = false;
+	// this.x = false;
+	// this.y = false;
+	// this.z = false;
+	// this.left = false;
+	// this.right = false;
+	// this.up = false;
+	// this.down = false;
+	// this.enter = false;
+	// this.space = false;
+	// this.mouseIsDown = false;
+	// this.mousePosition = new Vector2(0);
+	// this.offset = new Vector2(0);
+	// this.clamp = new Vector2(0);
 };
 
 var input = new Input();
+var input = input.tasto;
+// document.documentElement.onmousemove= function(e) {
+//     e = e || window.event;
 
-document.documentElement.onmousemove = function(e)
-{
-	e = e || window.event;
+//     input.mousePosition.x = e.clientX - input.offset.x;
+//     input.mousePosition.y = e.clientY - input.offset.y;
+// };
 
-	input.mousePosition.x = e.clientX - input.offset.x;
-	input.mousePosition.y = e.clientY - input.offset.y;
-};
+// document.documentElement.onmousedown= function(e) {
+//     input.mouseIsDown = true;
+// };
 
-document.documentElement.onmousedown = function(e)
-{
-	input.mouseIsDown = true;
-};
+// document.documentElement.onmouseup= function(e) {
+//     input.mouseIsDown: false,
+// };
 
-document.documentElement.onmouseup = function(e)
-{
-	input.mouseIsDown = false;
-};
-
-document.documentElement.onkeydown = function(e)
-{
+document.documentElement.onkeydown= function(e) {
 	var keycode;
 	// Server per non far scadere la sessione quando si sta giocando
 	var xmlHttp = new XMLHttpRequest();
-	xmlHttp.open("GET","game",true);
+	xmlHttp.open("GET", "game", true);
 	xmlHttp.send(null);
 	if (window.event)
 		keycode = window.event.keyCode;
 	else if (e)
 		keycode = e.which;
 
-	switch (keycode)
-	{
+	switch (keycode) {
 		case 13:
-			input.enter = true;
+			input["enter"] = true;
 			break;
 		case 32:
-			input.space = true;
+			input["space"] = true;
 			break;
 		case 37:
-			input.left = true;
+			input["left"] = true;
 			break;
 		case 38:
-			input.up = true;
+			input["up"] = true;
 			break;
 		case 39:
-			input.right = true;
+			input["right"] = true;
 			break;
 		case 40:
-			input.down = true;
+			input["down"] = true;
 			break;
 		case 65:
-			input.a = true;
+			input["a"] = true;
 			break;
 		case 66:
-			input.b = true;
+			input["b"] = true;
 			break;
 		case 67:
-			input.c = true;
+			input["c"] = true;
 			break;
 		case 68:
-			input.d = true;
+			input["d"] = true;
 			break;
 		case 69:
-			input.e = true;
+			input["e"] = true;
 			break;
 		case 70:
-			input.f = true;
+			input["f"] = true;
 			break;
 		case 71:
-			input.g = true;
+			input["g"] = true;
 			break;
 		case 72:
-			input.h = true;
+			input["h"] = true;
 			break;
 		case 73:
-			input.i = true;
+			input["i"] = true;
 			break;
 		case 74:
-			input.j = true;
+			input["j"] = true;
 			break;
 		case 75:
-			input.k = true;
+			input["k"] = true;
 			break;
 		case 76:
-			input.l = true;
+			input["l"] = true;
 			break;
 		case 77:
-			input.m = true;
+			input["m"] = true;
 			break;
 		case 78:
-			input.n = true;
+			input["n"] = true;
 			break;
 		case 79:
-			input.o = true;
+			input["o"] = true;
 			break;
 		case 80:
-			input.p = true;
+			input["p"] = true;
 			break;
 		case 81:
-			input.q = true;
+			input["q"] = true;
 			break;
 		case 82:
-			input.r = true;
+			input["r"] = true;
 			break;
 		case 83:
-			input.s = true;
+			input["s"] = true;
 			break;
 		case 84:
-			input.t = true;
+			input["t"] = true;
 			break;
 		case 85:
-			input.u = true;
+			input["u"] = true;
 			break;
 		case 86:
-			input.v = true;
+			input["v"] = true;
 			break;
 		case 87:
-			input.w = true;
+			input["w"]= true;
 			break;
 		case 88:
-			input.x = true;
+			input["x"] = true;
 			break;
 		case 89:
-			input.y = true;
+			input["y"] = true;
 			break;
 		case 90:
-			input.z = true;
+			input["z"] = true;
 			break;
 	}
 };
 
-document.documentElement.onkeyup = function(e)
-{
+document.documentElement.onkeyup= function(e) {
 	var keycode;
 	if (window.event)
 		keycode = window.event.keyCode;
 	else if (e)
 		keycode = e.which;
 
-	switch (keycode)
-	{
+	switch (keycode) {
 		case 13:
-			input.enter = false;
+			input["enter"] = false;
 			break;
 		case 32:
-			input.space = false;
+			input["space"] = false;
 			break;
 		case 37:
-			input.left = false;
+			input["left"] = false;
 			break;
 		case 38:
-			input.up = false;
+			input["up"] = false;
 			break;
 		case 39:
-			input.right = false;
+			input["right"] = false;
 			break;
 		case 40:
-			input.down = false;
+			input["down"] = false;
 			break;
 		case 65:
-			input.a = false;
+			input["a"] = false;
 			break;
 		case 66:
-			input.b = false;
+			input["b"] = false;
 			break;
 		case 67:
-			input.c = false;
+			input["c"] = false;
 			break;
 		case 68:
-			input.d = false;
+			input["d"] = false;
 			break;
 		case 69:
-			input.e = false;
+			input["e"] = false;
 			break;
 		case 70:
-			input.f = false;
+			input["f"] = false;
 			break;
 		case 71:
-			input.g = false;
+			input["g"] = false;
 			break;
 		case 72:
-			input.h = false;
+			input["h"] = false;
 			break;
 		case 73:
-			input.i = false;
+			input["i"] = false;
 			break;
 		case 74:
-			input.j = false;
+			input["j"] = false;
 			break;
 		case 75:
-			input.k = false;
+			input["k"] = false;
 			break;
 		case 76:
-			input.l = false;
+			input["l"] = false;
 			break;
 		case 77:
-			input.m = false;
+			input["m"] = false;
 			break;
 		case 78:
-			input.n = false;
+			input["n"] = true;
 			break;
 		case 79:
-			input.o = false;
+			input["o"] = false;
 			break;
 		case 80:
-			input.p = false;
+			input["p"] = false;
 			break;
 		case 81:
-			input.q = false;
+			input["q"] = false;
 			break;
 		case 82:
-			input.r = false;
+			input["r"] = false;
 			break;
 		case 83:
-			input.s = false;
+			input["s"] = false;
 			break;
 		case 84:
-			input.t = false;
+			input["t"] = false;
 			break;
 		case 85:
-			input.u = false;
+			input["u"] = false;
 			break;
 		case 86:
-			input.v = false;
+			input["v"] = false;
 			break;
 		case 87:
-			input.w = false;
+			input["w"]= false;
 			break;
 		case 88:
-			input.x = false;
+			input["x"] = false;
 			break;
 		case 89:
-			input.y = false;
+			input["y"] = false;
 			break;
 		case 90:
-			input.z = false;
+			input["z"] = false;
 			break;
 	}
 };

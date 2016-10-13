@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var api = require('../models/api');
 var auth = require('../models/auth');
 var path = require('path');
 var fs = require('fs');
@@ -18,9 +19,13 @@ router.get('/game',verificaAutenticazione,function (req, res, err) {
 router.get('/home',verificaAutenticazione,function (req, res, err) {
 	res.render('../home');
 });
-
+// Get Profile
 router.get('/profilo',verificaAutenticazione,function(req,res,err){
-	res.render('../profilo');
+	api.statistiche(req.user.id,function(statistiche){
+		res.render('../profilo',{stat:statistiche});
+	});
+	// console.log(statistiche);
+	
 });
 router.get("/map",verificaAutenticazione,function(req, res){
 	fs.readFile(path.join(__dirname,'../public/mappe/globalMap.json'), 'utf8', function (err,data) {
