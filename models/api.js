@@ -136,7 +136,7 @@ function secondi(m){
 	return Math.floor(((m-giorni(m)*24*60*60*1000)-ore(m)*60*60*1000-minuti(m)*60*1000)/1000);
 }
 // query per il tempo di completamento delle missione
-exports.statistiche = function(id){
+exports.statistiche = function(id,callback){
 	UserMissioni.filter({userId:id}).hasFields("dataFine").getJoin({missione:true}).run()
 	.then(function(missioni){
 		var tempo = new Array();
@@ -153,10 +153,11 @@ exports.statistiche = function(id){
 				secondi: secondi(ms)
 			});
 		});
-		return tempo;
+		// console.log("so arrivato a tempo:",tempo);
+		callback(tempo);
 	})
 	.error(function(err) {
-		return err;
+		throw err;
 	});
 }
 exports.getAvatar = function(id){

@@ -95,12 +95,11 @@ server.listen(app.get('port'), function() {
 	console.log('Server started on port ' + app.get('port'));
 })
 
-
 // Set server socket for the game
 var io = require('socket.io')(server);
 io.on('connection', function(socket) {
 	console.log('client connected');
-	socket.on('happy', function() {
-		console.log('happy');
+	socket.on('auth', function(user) {
+		console.log('user:',user);
 	});
 });
